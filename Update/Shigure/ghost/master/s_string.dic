@@ -14,7 +14,7 @@ On_username
 //---Network Update URL
 On_homeurl
 {
-	"https://raw.githubusercontent.com/TechNekoKit/Shigure/main/Update/Shigure"
+	"https://raw.githubusercontent.com/TechNekoKit/Shigure/main/Update/Shigure/"
 }
 
 
