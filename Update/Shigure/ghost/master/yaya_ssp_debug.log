@@ -1,0 +1,59 @@
+// AYA request log
+// load time: 2023/05/19 03:33:25
+
+// response (Execution time : 0[ms])
+SHIORI/3.0 204 No Content
+Charset: UTF-8
+
+
+// request
+GET SHIORI/3.0
+Charset: UTF-8
+SecurityLevel: local
+Sender: SSP
+SenderType: internal
+ID: OnSurfaceRestore
+Reference0: 0
+Reference1: 10
+
+
+// response (Execution time : 0[ms])
+SHIORI/3.0 200 OK
+Sender: AYA
+Charset: UTF-8
+Value: \0\s[0]\1\s[10]\e
+
+
+// request
+GET SHIORI/3.0
+Charset: UTF-8
+SecurityLevel: local
+Sender: SSP
+SenderType: internal
+Status: talking
+ID: OnTranslate
+Reference0: \0\s[0]\1\s[10]\e
+Reference1: 
+Reference2: OnSurfaceRestore
+Reference3: 010
+
+
+// response (Execution time : 0[ms])
+SHIORI/3.0 200 OK
+Sender: AYA
+Charset: UTF-8
+Value: \0\s[0]\1\s[10]\e
+
+
+// request
+NOTIFY SHIORI/3.0
+Charset: UTF-8
+SecurityLevel: local
+Sender: SSP
+SenderType: internal
+ID: enable_log
+Reference0: 0
+
+
+// unload time: 2023/05/19 03:33:36
+

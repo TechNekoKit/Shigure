@@ -1,0 +1,25 @@
+﻿//Basic Ghost Information
+
+charset,UTF-8
+
+
+name,Shigure
+type,ghost
+
+
+sakura.name,Shigure
+kero.name,TeruTeruBozu
+
+
+craftman,TechNekoKit
+craftmanw,TechNekoKit
+craftmanurl,https://technekokit.tumblr.com
+
+
+sstp.allowunspecifiedsend,0
+shiori,yaya.dll
+
+
+//Taskbar Icon
+
+parasol.ico //placeholder that doesn't even work < w <;;;, fix later ; w ;

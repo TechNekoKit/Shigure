@@ -1,0 +1,363 @@
+﻿//---------------------------Booting and Ending--------------------------
+
+OnFirstBoot
+{
+lastTalk = "" 
+passhour = 0
+passmin = 0 
+passsec = 0 
+username = "Human" 
+stroke = 0	
+teachusername = 0	
+mikireflag = 0	
+aitalkinterval = 300 
+birthdayprint = "????" 
+talktime = "5 minutes" 
+deleteshitai = "OFF" 
+nowshell = "master" 
+firstboot = 1 
+trust = 0 //WIP
+mood = "default" //WIP
+
+if reference0 == 0 
+ 	{
+		"\![enter,passivemode]\0\s[-1]\1\s[-1]Inexplicably,\w5 rain begins to fall in your desktop.\w8\w2\nIn the corner of your eye,\w8 a strange figure carrying a paper umbrella walks towards you.\w8\x\c\s[0]\w8\w8O\w3h\w3?\w8\w8\nI was not expecting to meet a human here.\w8\w2 Is this your domain?\w8\x\cWell,\w8 in any case\w3\s[2] the ambience here is wonderful.\w8\s[1] I think I will stay.\w8\w8\s[2]\n\nWith your permission,\w5 of course.\w8\w2\x\c\s[0]\w5Hm?\w8\w2 'What's with the rain?'\w8\nOh!\w8That would be me.\w8\w2\s[2] I quite like rain.\w8 I bring it wherever I go.\w8\w2\n\s[1]Anywhere with rain makes the place much better,\w5\s[0] don't you agree?\w8\x\c(It seems you will be stuck with this guy\w5\f[bold,1] AND\w3 rain\w8\f[bold,0] for a while...)\w8\![leave,passivemode]\e" //intro surfaces
+ 	}
+else
+ 	{
+ 		"\![enter,passivemode]\0\s[-1]\1\s[-1]Inexplicably,\w5 rain begins to fall in your desktop.\w8\w2\nIn the corner of your eye,\w8 a strange figure carrying a paper umbrella walks towards you.\w8\x\c\s[0]\w8\w8O\w3h\w3?\w8\w8\nI was not expecting to meet a human here.\w8\w2 Is this your domain?\w8\x\cWell,\w8 in any case\w3\s[2] the ambience here is wonderful.\w8\s[1] I think I will stay.\w8\w8\s[2]\n\nWith your permission,\w5 of course.\w8\w2\x\c\s[0]\w5Hm?\w8\w2 'What's with the rain?'\w8\nOh!\w8That would be me.\w8\w2\s[2] I quite like rain.\w8 I bring it wherever I go.\w8\w2\n\s[1]Anywhere with rain makes the place much better,\w5\s[0] don't you agree?\w8\x\c(It seems you will be stuck with this guy\w5\f[bold,1] AND\w3 rain\w8\f[bold,0] for a while...)\w8\![leave,passivemode]\e" //placeholder?
+ 	}
+}
+
+
+timeslot
+{
+if hour >= 5 && hour <= 8
+	{"earlymorning"}
+elseif hour >= 9 && hour <= 11
+	{"morning"}
+elseif hour >= 12 && hour <= 14
+	{"lunch"}
+elseif hour >= 15 && hour <= 17
+	{"afternoon"}
+elseif hour >= 18 && hour <= 20
+	{"evening"}
+elseif hour >= 21 && hour <= 24
+	{"latenight"}
+else
+	{"midnight"}
+}
+
+
+dayslot
+{
+	"%(month)month %(day)day"
+}
+
+
+//---Pronouns
+Select.choicefirsthehim
+{
+	presuffix = "masculine"
+	himher = "him"
+	heshe = "he"
+	hisher = "his"
+	hesshes = "he's"
+	--
+	NameInput
+}
+
+Select.choicefirstsheher
+{
+	presuffix = "feminine"
+	himher = "her"
+	heshe = "she"
+	hisher = "her"
+	hesshes = "she's"
+	--
+	NameInput
+}
+
+Select.choicefirsttheythem
+{
+	himher = "them"
+	heshe = "they"
+	hisher = "theirs"
+	hesshes = "they're"
+	--
+	NameInput
+}
+
+
+NameInput
+{	
+	"\1\s[10]Now that the pronouns are set, we will ask for the user's name. \![leave,passivemode]\w8\0\s[0]What is your name, user? \![open,inputbox,OnNameTeach,-1]\e"
+	
+	//At the end of this dialogue there's a tag saying "\![open,inputbox,OnNameTeach,-1]". It basically leads to the naming function defined in nameteach.dic, so don't touch it. Make sure it's there though! Otherwise your user won't have a way to put in their name. :o
+	
+	//*********************Advanced User Info*******************************
+	//What this tag basically means is that you're calling a function at the end of the dialogue with the \! tag, you are telling it to open, you're telling it to open an inputbox, and you're telling that inputbox to link to a function called OnNameTeach, which is in the nameteach.dic file. Remember what I said about On functions? I talked a bit about this in the SakuraScripting walkthrough page and the coding page.
+	//The -1 at the end determines how long the box will be open until it times out. -1 means it shouldn't time out at all, I think.
+	//***********************************************************************
+}
+
+
+
+//-----------------------Normal Booting----------------------------
+
+OnBoot
+{
+lastTalk = ""
+passhour = 0
+passmin = 0
+passsec = 0
+
+//if RAND(100) < 10 && RAND(100) > 0 //will this even work < w <;; will try later
+
+	
+ 	"\0\s[0]" //Neutral startup
+	--
+	//if trust == 0
+		//{
+			//
+		//}
+		
+if dayslot == userbirthday
+	{
+		"\0\s[0]It's %(bornmonthprint) %(borndayprint).\w8\s[2]Happy birthday, %(username).\e" 
+	}
+elseif dayslot == "7month 7day"	//Tanabata
+	{
+		"\0\s[2]It's that time of the year again.\w8\w2 As much as I would like to join in on the locals' festival\w5...\w8\s[0]\n\w8\w2Well,\w8 rain would ruin Tanabata for humans and deities alike.\w8\e" //bittersweet
+	}
+//elseif dayslot == "12month 25day"	//Christmas
+	//{
+		//"\0\s[0]Ah,\w5 Merry Christmas, %(username)!\w8 I have some presents for you.\w8\e"
+	//}
+else
+	{
+		"%(normalboottalk)"
+	}
+}
+	
+
+normalboottalk
+{
+if timeslot == "earlymorning"
+	{
+		"\0\s[0]Y\w8a\w8w\w8n\w8.\w5.\w5.\w5\w8\w2\s[0] Excuse me.\w8 I suppose I am not fully awake yet.\n\w8\w2\s[0] Perhaps I should make some tea...\n\w8\w2\s[0]Would you like to join me,\w8 %(username)?\w8\e" //yawn, tired, thinkside, neutral
+	}
+elseif timeslot == "morning"
+	{
+		"\0\s[0]Y\w8a\w8w\w8n\w8.\w5.\w5.\w5\w8\w2\s[0] Excuse me.\w8 I suppose I am not fully awake yet.\n\w8\w2\s[0] Perhaps I should make some tea...\n\w8\w2\s[0]Would you like to join me,\w8 %(username)?\w8\e" //placeholder
+	}
+//elseif timeslot == "lunch"
+	//{
+		//"\0\s[0]This is a lunch boot dialogue.\e"
+	//}
+//elseif timeslot == "afternoon"
+	//{
+		//"\1\s[10]This is an afternoon boot dialogue.\w8\0\s[0]That it is.\e"
+	//}
+elseif timeslot == "evening"
+	{
+ 		"\0\s[0]Ah,\w5 you're just in time.\w8\s[2] The rain looks more beautiful paired with the moonlight.\w8\n\s[0]Come,\w8 let's watch it together.\w8\e"
+	}
+//elseif timeslot == "latenight"
+	//{
+ 		//"\0\s[0]This is a late night boot dialogue.\1\w8\s[10]Between 21 and 24.\e"
+	//}
+//elseif timeslot == "midnight"
+	//{
+		//"\0\s[0]This is a middle of the night boot dialogue.\1\w8\s[10]From midnight to five.\e"
+	//}
+else
+ 	{
+		"\0\s[0]Ah.\w5 %(username)!\w8\w2 Welcome back.\w8 It's been raining since you've gotten here.\w8\0\s[2] How lovely.\w8\e"
+	}
+}
+
+
+
+OnClose
+{
+//if passmin >= 5 || passhour > 0
+	//{
+	//if timeslot == "earlymorning"
+			//{
+				//"\1\s[10]This is an early morning close dialogue.\w8\0\s[0]From 5 to 8.\w8"
+			//}
+		//elseif timeslot == "morning"
+ 			//{
+ 				//"\0\s[0]This is a morning close dialogue.\w8\w8"
+ 			//}
+ 		//elseif timeslot == "lunch"
+ 			//{
+ 				//"\0\s[0]This is a lunch close dialogue.\w8\1\s[10]Yup.\w8"
+ 			//}
+ 		//elseif timeslot == "afternoon"
+ 			//{
+ 				//"\0\s[0]This is an afternoon close dialogue.\w8\1\s[10]Done.\w8"
+ 			//}
+  		//elseif timeslot == "evening"
+ 			//{
+ 			//if weekday == 6 //here, a nested if statement is checking that if it's evening, is it also saturday? You can do this to check more specific times on other days as well. You can change this to some other day if you want, or just delete this little if/else section entirely and write your own evening related close dialogue.
+ 				//{
+ 					//"\0\s[0]This is a Saturday evening close dialogue.\w8\1\s[10]Somewhat specific.\w8"
+ 				//}
+ 			//else //if it's not saturday, then it'll do this dialogue instead.
+ 				//{
+ 					//"\0\s[0]This is an evening close dialogue.\w8\1\s[10]Bye.\w8"
+ 				//}
+ 			//}
+		//elseif timeslot == "latenight"
+			//{
+ 					//"\1\s[10]This is a late night close dialogue.\w8\0\s[0]That it is.\w8"
+			//}
+		//else //Midnight
+ 				//{
+					//"\0\s[0]This is a middle of the night close dialogue.\w8\1\s[10]Very late at night.\w8"
+				//}
+			//}
+		//}
+				
+ 	//}	
+	
+ 	"\0\s[0]Hm?\w8 Alright then.\w8\w2\s[1] I hope to see you later.\w8\w8\w4" //content3
+
+ 	--
+	"\-\e"
+}
+
+
+//-------------------------State Changing--------------------
+ 
+OnWindowStateMinimize
+{
+	""
+}
+
+OnWindowStateRestore
+{
+	""
+}
+
+//---Changing 
+OnGhostChanging
+{
+if reference0 == "Shigure"
+	{
+	if trust >= 100
+		{
+			"\0\s[0]I was too careless and I've gotten my tails wet from the rain...\w8\s[1] Apologies,\w5\s[0] I'll go and fix myself up.\w8\w8\e"
+		}
+	else
+		{
+			"\0\s[0]Does my hair seem a bit messy?\w8\s[2] Eheheh.\w2\w8 Sorry,\w5 sorry.\w8\s[0]\nI'll go ahead and clean myself up.\w8\w8\e"
+		}
+	}
+else 
+	{
+		"\0\s[1]Until we meet again.\w8\w8\e"
+	}
+}
+
+OnGhostChanged
+{
+	"\0\s[0]\1\s[10]"
+	--
+	if reference0 == "Shigure"
+	{
+		"\0\s[0]I've gone and freshened myself up a bit.\w8\n\s[1]So,\w8\s[2] shall we continue to watch the rain together?\w8\e"
+	}
+	else
+	{
+		"\0\s[0]Hello,\w5 Did you need me?\w8\e"
+		"\0\s[0]Oh,\w5 hello.\w8\w2 Was that one of your friends?\w8\w2 You didn't need to dismiss them.\n\w8 We could all have a chat together while we enjoy the rain.\w8\e"
+	}
+}
+
+
+//---Shell
+OnShellChanging
+{
+if reference0 == "default" 
+	{
+		"\0\s[0]Hm?\w8 My kimono seems a bit crooked?\w8\nOne moment...\w8\w8\e"
+	}
+else
+	{
+		"\0\s[0]Alright.\w8 One moment.\w8\e"
+	}
+}
+
+OnShellChanged
+{
+if reference0 == "default"
+ 	{
+ 	nowshell = "default"	
+		"\0\s[0]I've gone and straightened out my kimono.\w8\n\s[2]Do I look alright now?\w8\e"
+ 	}
+elseif reference0 == "Starry Night"
+ 	{
+ 	nowshell = "Starry Night"
+	if trust>=100
+		{
+			""
+		}
+	else
+		{
+			"\0\s[2]Just because I can't join in on the festivities\w3 doesn't mean I can't celebrate on my own terms.\w8\e"
+			"\0\s[1]I have a feeling that tonight will be wonderful night to gaze up at the stars.\w8\e"
+		}
+	}
+else
+ 	{
+		"\0\s[0]There.\w8\s[2] How do I look?\w8\e"
+	}
+}
+
+
+//---Dressup
+OnDressupChanged
+{
+if reference0 == 0 //in OnDressupChanged, reference0 refers to the character, therefore this is evaluating which character in question is getting dressed up. 0 is the main character, as you know from the walkthrough by now.
+	{
+	if reference1 == "Clothing for Girl" //This is the name of the clothing item in the descript.txt file, I'm pretty sure.
+		{
+			if reference2 == 1 //This checks if you're putting it on.
+			{
+			"\0\s[0]You put my clothing item on me.\w8\1\s[19]lol like zar would ever bother with clothes for a ghost.\w8\0\s[9]\n\n[half]Shut up dude you're going to get us in trouble.\e"
+			}
+			else // This checks if you're taking it off.
+			{
+			"\0\s[0]You took the clothing item off.\e"
+			}
+		}		
+	}
+else //if reference0 isn't the main character, then it has to be the side character.
+	{
+	if reference1 == "some kind of clothing for triangle??" //The name of the item of clothing in the descript.txt file in your shell folder.
+		{
+			if reference2 == 1 //If you put it on
+			{
+			"\1\s[10]I'm wearing some kind of clothing.\w8\0\s[8]Maybe a hat?\e"
+			}
+			else //When you take it off.
+			{
+			"\1\s[10]You took off some kind of clothing.\e"
+			}
+		}
+	elseif reference1 == "i'm gonna say a propeller beanie" //As you've seen above, you can use elseifs to expand the list if you have more than one item.
+		{
+			if reference2 == 1 //if you're putting it on
+			{
+			"\1\s[10]You put a hat on me.\w8\0\s[6]lol.\w8\1\n\n[half]\s[11]Shaddap.\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]You took off the hat.\e"
+			}
+		}
+	}
+}

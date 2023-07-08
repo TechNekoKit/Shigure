@@ -1,0 +1,311 @@
+﻿//---------------------------AI Talk--------------------------
+
+OnAiTalk
+{
+if RAND(100) < communicateratio
+	{
+		StartCommunicate
+	}
+else
+	{
+	if mikireflag == 0
+		{
+		if CHAIN.IDName == "" 
+			{
+				lastTalk = RandomTalk
+			}
+		else 
+			{
+				lastTalk = ChainTalk
+			}
+		lastTalk
+		}
+	else
+		{
+			MikireTalk
+		}
+	}
+}
+
+
+//--RandomTalk 
+
+RandomTalk : nonoverlap_pool
+{
+//---Random
+if passmin <= 120
+	{
+	if timeslot == "earlymorning" || timeslot == "morning"
+		{
+			"\0\s[1]Y\w8a\w8w\w8n\w8...\w8\w2\s[0] Sorry,\w8 not a morning person.\w8\e" //yawn, drowsy
+		}
+	elseif timeslot == "lunch" || timeslot == "afternoon"
+		{
+			"\0\s[1]M\w1m\w3.\w3.\w3.\w8\nWhat a wonderful day for rain.\w8\e"
+		}
+	elseif timeslot == "evening"
+		{
+			"\0\s[1]M\w1m\w3.\w3.\w3.\w8\nWhat a wonderful evening for rain.\w8\e"
+		}
+	else
+		{
+			"\0\s[1]M\w1m\w3.\w3.\w3.\w8\nWhat a wonderful night for rain.\w8\e"
+		}
+	}
+		
+if passmin >= 60
+	{
+		"\0\s[0]Did you know that hydrangeas are my favorite flower?\w8\w2\s[2] Eheh,\w5 it's pretty obvious.\w8\w2\n\s[1]I have a small hydrangea branch decoration on top of my umbrella\w8\w2\s[2] and my teruterubozu also has a hydrangea flower around its neck.\w8\e"
+		"\0\s[1]Hydrangeas are wonderful plants,\w5 you know.\w8\w2\s[2] Did you know that they are one of the only flowers capable of abosrbing water through their petals?\w8\e"
+	}
+		
+	
+//---Trust
+//if trust >= 100 && trust <= 200	|| trust == 100		//acquainted
+	//{
+	//""
+	//}
+	
+//if trust == 0 && trust <= 100		//stranger
+	//{
+	//""
+	//}
+
+
+//---Dates
+//if month == 1
+	//{
+		//"\0\s[0]This is dialogue for January.\e"
+	//}
+	
+	
+//if weekday == 0
+	//{
+		//"\0\s[0]This is dialogue for Sunday.\e"
+	//}
+
+
+//if timeslot == "earlymorning"
+	//{
+		//""
+	//}
+	
+//if timeslot == "morning"
+	//{
+		//""
+	//}
+	
+//if timeslot == "lunch"
+	//{
+		//""
+	//}
+	
+//if timeslot == "afternoon"
+	//{
+		//""
+	//}
+	
+//if timeslot == "evening"
+	//{
+		//""
+	//}
+	
+//if timeslot == "latenight"
+	//{
+		//""
+	//}
+	
+//if timeslot == "midnight"
+	//{
+		//""
+	//}
+	
+	
+//---Double Envelopes
+	//{
+	//_korean = lessonkor //Here, the envelope "lessonkor" (which is in word.dic) is stored as a new temporary value called _korean. You can name the new value anything you like. As a reminder, when coding, it goes "4 = 2 + 2" and not "2 + 2 = 4". The result always comes first!
+	//If you look at lessonkor in word.dic, you'll see it goes "Korean word, meaning". So "Korean word" is the first value in that array, and "meaning" is the second. Arrays always start at 0, as a note.
+	//_korword = _korean[0] //Now we make a temporary value called "_korword", which is what will store the Korean word. Since the Korean word is the first value in the array _korean which we just defined, then we can pull that value from the array with _korean[0]. [0] is telling it which entry in the array to take - in this case, the first one (again, arrays start at 0).
+	//_kormean = _korean[1] //Now we make a temporary value called "_kormean", which is what will store the meaning of the Korean word. This is the second value in the array, so we can pull it out of _korean by using _korean[1].
+
+	//"\1\s[10]Here is an example of a double envelope. The Korean word is %(_korword).\w8\0\s[0]The word means %(_kormean).\e"
+	
+	//As you can see here, we then use the values we set above for _korword and _kormean up there in the dialogue as our new envelopes. If you're planning on using a double envelope/array like this, study how this works very carefully! If you're good with arrays, you can do a lot with this kind of thing, but I must admit I am terrible with arrays and they're still hard for me to wrap my head around, so I don't have much advice on how to do that kind of thing.
+	//The underscores in front of korword and kormean mean that the value is temporary, and will disappear when the dialogue has finished. More on this kind of thing on the coding page of the walkthrough.
+	
+	//Additional Note - You can't test this kind of dialogue in Script Input. You'll have to wait until it comes up naturally in your ghost's random dialogue.
+	//}
+	
+	
+//--Multiple Responses
+	//If you've poked around menu.dic or string.dic or read the walkthrough, you may have seen me touch on setting multiple options for any one given bit of dialogue. This kind of dialogue follows much the same format.
+	
+	//{ //Again, note the brackets around these unique bits of dialogue. Dialogue that's more complicated than just a single line of "dialogue/more dialogue/more dialogue/end" usually needs to be put in brackets like this. 
+	
+	//"\0\s[0]I am asking you a generic question, Triangle. Generic question?\w8\1\s[10]"
+	//Notice that the last few tags set up Triangle's pose before going into his text below. You don't have to do this if you want each response to have its own pose, but if he'll have the same expression regardless of what he's saying, you might as well save yourself the work. Note this does not end with \e either, since the dialogue isn't done yet.
+	//-- //You've probably seen these double dashes before in other .dic files. In this case, these dashes enclose a set of multiple responses. More on double dashes in the coding page on the walkthrough site.
+	//"This is my first response."
+	//"This is my second response."
+	//"This is my third response."
+	//"This is my fourth response."
+	//"This is my fifth response."
+	//"This is my sixth response."
+	//As you can see here, there are six potential replies Triangle might have to Girl's question. Each time this dialogue is called, he will randomly select one response from these six.
+	//-- //The closing set of dashes for his dialogue options.
+	//"\w8\0\s[0]\n\n[half]" //Now we're going back to Girl to set up for her multiple responses in return. This line of tags mostly just sets up for what she will say. Like above, you can see her pose is set in here with \s[0], so she'll have the same pose for each response, and the consistent spacing with \n\n[half].
+	//-- //opening dashes
+	//"First response to your response."
+	//"Second response to your response."
+	//"Third response to your response."
+	//"Fourth response to your response."
+	//Following the same pattern as above, Girl will randomly reply with one of these bits of dialogue. Note that these responses are also randomly chosen, so it may go Triangle says response one, Girl says response three, or Triangle says response four, Girl says response two, or so on and so forth. So make sure the exchange will still make sense regardless of what either of them might say.
+	//-- //closing dashes
+	//"\e" //Dialogue ends
+	//}
+	
+	//{
+	//"\0\s[0]Say either black or white.\w8\1\s[10]What if I say " 
+	//-- //opening dashes
+	//"green"
+	//"red"
+	//"purple"
+	//"orange"
+	//"yellow"
+	//"\s[18]magenta"
+	//-- //closing dashes
+	//" instead?\w8\0\n\n[half]\s[9]Then you're not really cooperating.\w8\1\n\n[half]\s[15]Sounds about right.\e" //dialogue ends
+	
+	//You can see that this follows the formula of the above, although there's only one set of multiple responses in here, then Triangle continues with his sentence. You can use this feature in many different ways if you're creative.
+	//}
+	
+	//"\0\s[0]\f[height,20]These words are really large.\f[height,default]\w8\1\s[10]These words are a normal size. \w8\f[height,6]These words are small.\f[height,default]\e"
+	
+	//You can use other fancier SakuraScript bits in your dialogue if you want to get font effects, although I won't get too much into them here. In this case, \f[height,20] changes the height of the font, in this case to 20 or to 6, and then \f[height,default] changes them back to normal. I touch more on this in the SakuraScript page of the walkthrough.
+	
+	//"\0\s[0]\f[strike,true]These words are struck out.\f[strike,default]\w8\1\s[10]\f[sub,true]These words are a subscript.\f[sub,false] \f[sup,true]These words are a superscript.\f[sup,false] \f[underline,true]These words are underlined.\f[underline,default] \f[bold,true]These words are bold.\f[bold,false] \f[italic,true]These words are italic.\f[italic,false] \f[color,186,146,112]These words are a color.\f[color,default] This tag would return to default.\f[default]\e"
+	
+	//Here's a list of similar tags you may find useful. You can see they function much like <b> or <i> tags in html. You just enclose the piece of text you want to change with them. Note that they start with \f[word,true] to turn it on, then \f[word,false] or \f[word,default] to turn it off. I assume you can tell what the tags do by the text they enclose.
+	//For the \f[color] tag, the three colors listed are the RGB values of the color you want to use for your text. Change them to whatever color you want to use. \f[default] can be an easy way to quickly go back to the default word setting in your balloon after messing with colors and effects a lot.
+
+}
+
+
+//---Chains
+//achain
+//{{CHAIN
+	//this will happen the first time the chain is called
+	//"\0\s[0]Here is the second part of the chain.\w8\1\s[10]Will there be more?\e"
+	
+	//they will then go to this dialogue next
+	//"\0\s[0]This is the third part of chained dialogue.\1\w8\s[10]This will lead to a fourth part.\e"
+	
+	//this will be the last piece of dialogue in the chain, then they will go back to their normal dialogue
+	//"\0\s[0]This is the fourth piece of chained dialogue.\1\w8\s[10]This is the end.\e:chain=end"
+//}}CHAIN
+
+//anotherchain
+//{{CHAIN
+	//"\0\s[0]This is the second example of chained dialogue.\1\w8\s[10]This will only have two parts.\e"
+	
+	//"\0\s[0]This is the last piece of the second example of chained dialogue\1\w8\s[10]This will end here.\e:chain=end"
+//}}CHAIN
+
+
+//---Time Pass/Check
+HourCheck
+{
+if passmin >= 59
+	{
+		passmin = 0
+		passhour = passhour + 1
+	}
+}
+
+OnMinuteChange
+{
+	HourCheck
+	--
+if minute == 0
+	{
+ 	if hour == 23
+		{
+ 			"\0\s[0]Ah,\w5 it's almost midnight,\w3 %(username).\w8\w2 Are you planning to sleep soon?\w8\e"
+		}
+		
+ 	elseif hour == 0 
+		{
+ 			"\0\s[1]It's a new day.\w8\e"
+		}
+		
+	else
+		{
+			"\0\s[0]It's %(hour12)'o clock.\w8\e"
+		}
+	}
+elseif mikireflag == 1
+	{
+		MikireTalk
+	}
+}
+
+OnSecondChange
+{
+if passsec == 59
+	{
+		passsec = 0
+ 		passmin = passmin + 1
+	}
+else
+	{
+	 	passsec = passsec + 1
+	}
+	
+if mikireflag == 0 && reference1 == 1
+	{
+		MikireTalk
+	}
+if mikireflag == 1 && reference1 == 0
+	{
+		EndMikireTalk
+	}
+	mikireflag = reference1 
+//if reference2 == 1
+	//{	
+ 		//"\0\s[0]Me and Triangle are overlapping.\w8\1\s[19]That's strange since your resolution is %screenwidthx%screenheight, %(username). Shouldn't we have enough space?\4\e"
+	//}
+}
+ 
+MikireTalk
+{
+	"\0\s[0]...?\w8\w2 Something seems to be in the way\w8." //confused
+}
+ 
+EndMikireTalk
+{
+	"\0\s[0]Ah.\w8 There we go.\w8\e" //surprised
+}
+
+
+OnSurfaceRestore
+{
+	"\0\s[0]\e"
+}
+
+
+//---Hotkeys
+OnKeyPress
+{
+	if reference0 == "t"
+	{
+	OnAiTalk
+	}
+	elseif reference0 == "r"
+	{
+	OnLastTalk
+	}
+	elseif reference0 == "f1"
+	{
+	"\![open,readme]"
+	}
+}

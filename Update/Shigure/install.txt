@@ -1,0 +1,11 @@
+﻿//Information
+
+charset,UTF-8
+type,ghost
+name,Shigure
+directory,Shigure
+
+
+//Balloon ---WIP
+
+balloon.directory,z_simple
